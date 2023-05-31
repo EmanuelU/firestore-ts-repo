@@ -42,7 +42,7 @@ export interface SubCollectionRepo<T> {
 Import your types and the helper functions from the package:
 ```typescript
 import { type User, type Books } from './your/types';
-import { type CollectionRepo, createCollectionRepo, createSubCollectionRepo, type SubCollectionRepo } from 'firestore-repo'
+import { type CollectionRepo, createCollectionRepo, createSubCollectionRepo, type SubCollectionRepo } from 'firestore-ts-repo'
 ```
 
 **Note:** You also need to have your **`Firestore`** instance available. 
@@ -73,7 +73,6 @@ Then you can use the repo to do common Firestore operation, with strict typing a
 
 ```typescript   
 import repo from './your/repo';
-import { CollectionReference } from 'firebase/firestore'
 
 // create a query for a specific type
 const q = query<User>(
