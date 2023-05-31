@@ -9,6 +9,10 @@
   "scripts": {
     "build": "rimraf -rf dist && tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EmanuelU/firestore-ts-repo"
+  },
   "keywords": [],
   "author": "Emanuel Unge",
   "license": "ISC",

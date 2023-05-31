@@ -27,6 +27,11 @@ export interface CollectionRepo<T> {
    * @param id - the document id
    */
   doc: (id: string) => Promise<DocumentSnapshot<T>>
+  /**
+   * Get a document reference by id from this collection.
+   * @param id - the document id
+   */
+  new: () => DocumentReference<T>
 }
 
 /**
@@ -60,6 +65,11 @@ export interface SubCollectionRepo<T> {
    * @param id - the document id
    */
   doc: (parentId: string, id: string) => Promise<DocumentSnapshot<T>>
+  /**
+   * create a document.
+   * @param id - the document id
+   */
+  new: (parentId: string) => DocumentReference<T>
   /**
    * Gets a query for this subcollection, uses Firestore collectionGroup method.
    * This means that if you have multiple subcollections with the same name, they will all be included in the query.
