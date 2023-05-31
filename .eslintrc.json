@@ -1,0 +1,23 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "standard-with-typescript",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "no-unused-vars": "off",
+        "linebreak-style": "off",
+        "require-jsdoc": "off",
+        "object-curly-spacing": "error",
+        "indent": ["error", 2],
+        "max-len": "off",
+        "quotes": [2, "single", "avoid-escape"]
+    }
+}
