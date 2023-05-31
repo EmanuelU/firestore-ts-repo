@@ -6,7 +6,7 @@ The main use case is to have a single place to define your collections and subco
 
 ### Installation
 
-```npm i firestore-repo```
+```npm i firestore-ts-repo```
 
 ### API
 ```typescript
