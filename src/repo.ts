@@ -3,7 +3,9 @@ import {
   collectionGroup,
   doc as docRef,
   getDoc,
-  type Firestore, type Query, type DocumentReference, type CollectionReference
+  addDoc,
+  updateDoc,
+  type Firestore, type Query, type DocumentReference, type CollectionReference, type UpdateData
 } from 'firebase/firestore'
 import { type CollectionRepo, type SubCollection, type SubCollectionRepo } from './types'
 
@@ -41,7 +43,9 @@ export function createRepoFromRef<T> (col: CollectionReference<T>): CollectionRe
     collection: col,
     docRef: (id: string) => getDocRef<T>(col, id),
     doc: async (id: string) => await getDoc<T>(getDocRef<T>(col, id)),
-    new: () => makeDocRef<T>(col)
+    new: () => makeDocRef<T>(col),
+    add: async (data: T) => await addDoc<T>(col, data),
+    update: async (ref: DocumentReference<T>, data: UpdateData<T>) => { await updateDoc<T>(ref, data) }
   }
 }
 

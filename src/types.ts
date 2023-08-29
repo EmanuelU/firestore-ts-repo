@@ -1,4 +1,4 @@
-import { type CollectionReference, type DocumentReference, type DocumentSnapshot, type Query } from 'firebase/firestore'
+import { type CollectionReference, type DocumentReference, type DocumentSnapshot, type Query, type UpdateData } from 'firebase/firestore'
 
 export type SubCollection<TSub> = (doc: DocumentReference) => CollectionReference<TSub>
 
@@ -32,6 +32,16 @@ export interface CollectionRepo<T> {
    * @param id - the document id
    */
   new: () => DocumentReference<T>
+  /**
+   * Add a document reference to this collection.
+   * @param data - the data for the document
+   */
+  add?: (data: T) => Promise<DocumentReference<T>>
+  /**
+   * Add a document reference to this collection.
+   * @param data - the data for the document
+   */
+  update?: (ref: DocumentReference<T>, data: UpdateData<T>) => Promise<void>
 }
 
 /**
