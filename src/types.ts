@@ -1,13 +1,13 @@
-import { type CollectionReference, type DocumentReference, type DocumentSnapshot, type Query, type UpdateData } from 'firebase/firestore'
+import { type CollectionReference, type DocumentReference, type DocumentSnapshot, type Query, type UpdateData, type DocumentData } from 'firebase/firestore'
 
-export type SubCollection<TSub> = (doc: DocumentReference) => CollectionReference<TSub>
+export type SubCollection<TSub, D extends DocumentData> = (doc: DocumentReference) => CollectionReference<TSub, D>
 
 export type FieldNames<T> = (name: keyof T) => keyof T
 
 /**
  * A repository for a collection.
  */
-export interface CollectionRepo<T> {
+export interface CollectionRepo<T, D extends DocumentData> {
   /**
    * Helper function - makes sure you are only accessing fields that exist on the type when referring to them via string.
    * @param name
@@ -16,38 +16,38 @@ export interface CollectionRepo<T> {
   /**
    * The collection reference for this repo, to be used in queries etc.
    */
-  collection: CollectionReference<T>
+  collection: CollectionReference<T, D>
   /**
    * Get a document reference by id from this collection.
    * @param id - the document id
    */
-  docRef: (id: string) => DocumentReference<T>
+  docRef: (id: string) => DocumentReference<T, D>
   /**
    * Get a document by id from this collection.
    * @param id - the document id
    */
-  doc: (id: string) => Promise<DocumentSnapshot<T>>
+  doc: (id: string) => Promise<DocumentSnapshot<T, D>>
   /**
    * Get a document reference by id from this collection.
    * @param id - the document id
    */
-  new: () => DocumentReference<T>
+  new: () => DocumentReference<T, D>
   /**
    * Add a document reference to this collection.
    * @param data - the data for the document
    */
-  add?: (data: T) => Promise<DocumentReference<T>>
+  add?: (data: T) => Promise<DocumentReference<T, D>>
   /**
    * Add a document reference to this collection.
    * @param data - the data for the document
    */
-  update?: (ref: DocumentReference<T>, data: UpdateData<T>) => Promise<void>
+  update?: (ref: DocumentReference<T, D>, data: UpdateData<D>) => Promise<void>
 }
 
 /**
  * A repository for a subcollection - a collection that is nested inside a document.
  */
-export interface SubCollectionRepo<T> {
+export interface SubCollectionRepo<T, D extends DocumentData> {
   /**
    * Helper function - makes sure you are only accessing fields that exist on the type when referring to them via string.
    * @param name
@@ -57,32 +57,32 @@ export interface SubCollectionRepo<T> {
    * The collection reference for this subcollection, to be used in queries etc.
    * @param doc - the parent document reference
    */
-  collection: SubCollection<T>
+  collection: SubCollection<T, D>
   /**
    * The collection reference for this subcollection, to be used in queries etc.
    * @param parentId - the parent document id
    */
-  collectionById: (parentId: string) => CollectionReference<T>
+  collectionById: (parentId: string) => CollectionReference<T, D>
   /**
    * Get a document reference by id from this subcollection.
    * @param parentId - the parent document id
    * @param id - the document id
    */
-  docRef: (parentId: string, id: string) => DocumentReference<T>
+  docRef: (parentId: string, id: string) => DocumentReference<T, D>
   /**
    * Get a document by id from this subcollection.
    * @param parentId - the parent document id
    * @param id - the document id
    */
-  doc: (parentId: string, id: string) => Promise<DocumentSnapshot<T>>
+  doc: (parentId: string, id: string) => Promise<DocumentSnapshot<T, D>>
   /**
    * create a document.
    * @param id - the document id
    */
-  new: (parentId: string) => DocumentReference<T>
+  new: (parentId: string) => DocumentReference<T, D>
   /**
    * Gets a query for this subcollection, uses Firestore collectionGroup method.
    * This means that if you have multiple subcollections with the same name, they will all be included in the query.
    */
-  collectionGroup: Query<T>
+  collectionGroup: Query<T, D>
 }
