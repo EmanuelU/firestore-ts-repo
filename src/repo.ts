@@ -5,6 +5,7 @@ import {
   getDoc,
   addDoc,
   updateDoc,
+    deleteDoc,
   type Firestore, type Query, type DocumentReference, type CollectionReference, type UpdateData, type DocumentSnapshot, type DocumentData
 } from 'firebase/firestore'
 import { type CollectionRepo, type SubCollection, type SubCollectionRepo } from './types'
@@ -43,9 +44,12 @@ export function createRepoFromRef<T, D extends DocumentData> (col: CollectionRef
     collection: col,
     docRef: (id: string) => getDocRef<T, D>(col, id),
     doc: async (id: string) => await getDoc<T, D>(getDocRef<T, D>(col, id)),
-    new: () => makeDocRef<T, D>(col),
+    makeRef: () => makeDocRef<T, D>(col),
     add: async (data: T) => await addDoc<T, D>(col, data),
-    update: async (ref: DocumentReference<T, D>, data: UpdateData<D>) => { await updateDoc<T, D>(ref, data) }
+    delete: async (id: string) => await deleteDoc(getDocRef<T, D>(col, id)),
+    deleteRef: async (ref: DocumentReference<T, D>) => await deleteDoc(ref),
+    update: async (id: string, data: UpdateData<D>) => { await updateDoc<T, D>(getDocRef<T, D>(col, id), data) },
+    updateRef: async (ref: DocumentReference<T, D>, data: UpdateData<D>) => { await updateDoc<T, D>(ref, data) }
   }
 }
 

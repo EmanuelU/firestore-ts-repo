@@ -28,20 +28,34 @@ export interface CollectionRepo<T, D extends DocumentData> {
    */
   doc: (id: string) => Promise<DocumentSnapshot<T, D>>
   /**
-   * Get a document reference by id from this collection.
+   * Get a document reference to a new document in this collection.
+   */
+  makeRef: () => DocumentReference<T, D>
+  /**
+   * Add a document reference to this collection.
+   * @param data - the data for the document
+   */
+  add: (data: T) => Promise<DocumentReference<T, D>>
+  /**
+   * Delete a document by Id from this collection.
    * @param id - the document id
    */
-  new: () => DocumentReference<T, D>
+  delete: (id: string) => Promise<void>
+  /**
+   * Delete a document by reference from this collection.
+   * @param ref - the ref for the document
+   */
+  deleteRef: (ref: DocumentReference<T, D>) => Promise<void>
   /**
    * Add a document reference to this collection.
    * @param data - the data for the document
    */
-  add?: (data: T) => Promise<DocumentReference<T, D>>
+  update: (id: string, data: UpdateData<D>) => Promise<void>
   /**
    * Add a document reference to this collection.
    * @param data - the data for the document
    */
-  update?: (ref: DocumentReference<T, D>, data: UpdateData<D>) => Promise<void>
+  updateRef: (ref: DocumentReference<T, D>, data: UpdateData<D>) => Promise<void>
 }
 
 /**
