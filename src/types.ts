@@ -35,7 +35,7 @@ export interface CollectionRepo<T, D extends DocumentData> {
    * Add a document reference to this collection.
    * @param data - the data for the document
    */
-  add: (data: T) => Promise<DocumentReference<T, D>>
+  add: (data: Omit<T, 'id'>) => Promise<DocumentReference<Omit<T, 'id'>, D>>
   /**
    * Delete a document by Id from this collection.
    * @param id - the document id

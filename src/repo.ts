@@ -45,7 +45,7 @@ export function createRepoFromRef<T, D extends DocumentData> (col: CollectionRef
     docRef: (id: string) => getDocRef<T, D>(col, id),
     doc: async (id: string) => await getDoc<T, D>(getDocRef<T, D>(col, id)),
     makeRef: () => makeDocRef<T, D>(col),
-    add: async (data: T) => await addDoc<T, D>(col, data),
+    add: async (data: Omit<T, 'id'>) => await addDoc<Omit<T, 'id'>, D>(col, data),
     delete: async (id: string) => await deleteDoc(getDocRef<T, D>(col, id)),
     deleteRef: async (ref: DocumentReference<T, D>) => await deleteDoc(ref),
     update: async (id: string, data: UpdateData<D>) => { await updateDoc<T, D>(getDocRef<T, D>(col, id), data) },
