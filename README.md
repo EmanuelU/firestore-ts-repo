@@ -1,6 +1,6 @@
 ## Firebase Firestore Repository for TypeScript
 
-This is a simple repository for Firebase Firestore. It is written in TypeScript and uses the Firebase v9 SDK.
+This is a simple repository for Firebase Firestore. It is written in TypeScript and uses the Firebase v10 SDK.
 
 The main use case is to have a single place to define your collections and subcollections, and then use them throughout your app. This way you can make sure you are only using existing fields in your types, and get IDE help for your queries.
 
