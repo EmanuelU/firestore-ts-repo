@@ -1,4 +1,12 @@
-import { type CollectionReference, type DocumentReference, type DocumentSnapshot, type Query, type UpdateData, type DocumentData } from 'firebase/firestore'
+import {
+  type CollectionReference,
+  type DocumentReference,
+  type DocumentSnapshot,
+  type Query,
+  type UpdateData,
+  type DocumentData,
+  setDoc, WithFieldValue
+} from 'firebase/firestore'
 
 export type SubCollection<TSub, D extends DocumentData> = (doc: DocumentReference) => CollectionReference<TSub, D>
 
@@ -32,10 +40,17 @@ export interface CollectionRepo<T, D extends DocumentData> {
    */
   makeRef: () => DocumentReference<T, D>
   /**
-   * Add a document reference to this collection.
+   * Add a document to this collection.
+   * Will generate a random Id for the document.
    * @param data - the data for the document
    */
   add: (data: Omit<T, 'id'>) => Promise<DocumentReference<Omit<T, 'id'>, D>>
+  /**
+   * Add a document reference to this collection
+   * @param ref - the ref for the document
+   * @param data - the data for the document
+   */
+  setRef: (ref: DocumentReference<T, D>, data: WithFieldValue<T>) => Promise<void>
   /**
    * Delete a document by Id from this collection.
    * @param id - the document id
